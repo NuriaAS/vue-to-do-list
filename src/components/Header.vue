@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { EventBus } from '@/event-bus.js';
 export default {
   name: 'ToDoList',
   props: {
@@ -72,6 +73,7 @@ export default {
     submitHandler() {
       if(this.newTask && this.newDate) {
         this.setListItem();
+        EventBus.$emit('task', this.itemList);
       }
       this.resetModel();
     }
