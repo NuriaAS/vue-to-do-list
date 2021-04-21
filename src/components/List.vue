@@ -1,54 +1,57 @@
 <template>
     <section class="tasks">
         <ul class="tasks__list">
-            <li class="tasks__list__item">
+            <li class="tasks__list__item" v-for="item in tasks" v-bind:key="item" >
                 <section class="tasks__list__item__title">
-                    <h4>List item to show</h4>
+                    <h4>{{ item.task }}</h4>
                     <h4>X</h4>
                 </section>
-                <section class="tasks__list__item__info">
+                <section class="task__list__item__info">
                     <p class="creation">Created: 22/03/21</p>
-                    <p class="when">Do on: 30/03/21</p>
-                    <p class="task-priority">Priority: Higth</p>
+                    <p class="when">Do on: {{ item.date }}</p>
+                    <p class="task-priority">Priority: {{ item.priority }}</p>
                 </section>
             </li>
         </ul>
-        <h1>LIST</h1>
     </section>
 </template>
 
 <script>
+import { EventBus } from '@/event-bus.js';
 export default {
   name: 'List',
-  
+  data() {
+    return {
+      tasks: []
+    }
+  },
+  created() {
+    EventBus.$on('task', (item) => {
+      this.tasks.push(item)
+    })
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-ul {
+.tasks__list {
   list-style-type: none;
   padding: 0;
 }
-li {
+.tasks__list__item {
   display: block;
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 10px;
   background-color: #ece7e7;
+  margin-bottom: 1rem;
 }
-/* .tasks_list {
-} */
 .tasks__list__item section {
   display: flex;
-  padding: 0rem 1rem;
+  padding: 0 1rem;
 }
 .tasks__list__item__title {
-  /* width: 100%; */
   justify-content: space-between;
   border-bottom: 1px solid rgba(92, 95, 97, 0.3);
-  
 }
-
 .tasks__list__item__info p {
   margin-left: 1rem;
   font-size: 0.8rem;
@@ -59,10 +62,10 @@ li {
 .tasks__list__item__info p:first-child {
   margin-left: 0;
 }
- @media only screen and (min-width: 767px) {
-     .tasks {
-       width: 80%;
-       margin: auto;
-     }
+@media only screen and (min-width: 767px) {
+  .tasks {
+    width: 80%;
+    margin: auto;
   }
+}
 </style>
