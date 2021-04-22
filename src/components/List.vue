@@ -1,19 +1,19 @@
 <template>
-    <section class="tasks">
-        <ul class="tasks__list">
-            <li class="tasks__list__item" v-for="item in tasks" v-bind:key="item" >
-                <section class="tasks__list__item__title">
-                    <h4>{{ item.task }}</h4>
-                    <h4>X</h4>
-                </section>
-                <section class="task__list__item__info">
-                    <p class="creation">Created: 22/03/21</p>
-                    <p class="when">Do on: {{ item.date }}</p>
-                    <p class="task-priority">Priority: {{ item.priority }}</p>
-                </section>
-            </li>
-        </ul>
-    </section>
+  <section class="tasks">
+    <ul class="tasks__list">
+      <li class="tasks__list__item" v-for="item in tasks" v-bind:key="item" >
+        <section class="tasks__list__item__title">
+          <h4>{{ item.task }}</h4>
+          <a @click="deleteHandler">X</a>
+        </section>
+        <section class="task__list__item__info">
+          <p class="creation">Created: 22/03/21</p>
+          <p class="when">Do on: {{ item.date }}</p>
+          <p class="task-priority">Priority: {{ item.priority }}</p>
+        </section>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <script>
@@ -29,6 +29,11 @@ export default {
     EventBus.$on('task', (item) => {
       this.tasks.push(item)
     })
+  },
+  methods: {
+    deleteHandler(index) {
+      this.tasks.splice(index, 1);
+    }
   }
 }
 </script>
@@ -51,6 +56,12 @@ export default {
 .tasks__list__item__title {
   justify-content: space-between;
   border-bottom: 1px solid rgba(92, 95, 97, 0.3);
+}
+.tasks__list__item__title a {
+  cursor: pointer;
+  padding: 0.3rem;
+  align-self: center;
+  font-weight: 600;
 }
 .tasks__list__item__info p {
   margin-left: 1rem;

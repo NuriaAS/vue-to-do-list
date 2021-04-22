@@ -10,9 +10,9 @@
         <label for="priority" class="header__form__selectors__label">
           Priority
           <select name="priority" id="" class="header__form__selectors__label__select" v-model="newPriority" required>
-              <option value="high" selected>High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
+            <option value="high" selected>High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
           </select>
         </label>
         <label for="time" class="header__form__selectors__label">
@@ -23,20 +23,20 @@
           Save
         </button>
       </div>
-      </form>
-      <section class="header__order">
-        <label for="" class="header__order__label">
-          Order list by:
-          <select name="order" id="" class="header__order__label__list-order">
-              <option value="priority" selected>High to low priority</option>
-              <option value="priorityReverse">Low to high priority</option>
-              <option value="created">Last to first added</option>
-              <option value="createdReverse">First to last added</option>
-              <option value="when">First to last to do</option>
-              <option value="whenReverse">Last to first to do</option>
-              <option value="alphabetical">From A to Z</option>
-              <option value="alphabeticalReverse">From Z to A</option>
-          </select>
+    </form>
+    <section class="header__order">
+      <label for="" class="header__order__label">
+        Order list by:
+        <select name="order" id="" class="header__order__label__list-order">
+          <option value="priority" selected>High to low priority</option>
+          <option value="priorityReverse">Low to high priority</option>
+          <option value="created">Last to first added</option>
+          <option value="createdReverse">First to last added</option>
+          <option value="when">First to last to do</option>
+          <option value="whenReverse">Last to first to do</option>
+          <option value="alphabetical">From A to Z</option>
+          <option value="alphabeticalReverse">From Z to A</option>
+        </select>
       </label>
     </section>
   </div>
