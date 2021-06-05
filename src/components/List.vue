@@ -1,7 +1,7 @@
 <template>
   <section class="tasks">
     <ul class="tasks__list">
-      <li class="tasks__list__item" v-for="item in tasks" v-bind:key="item" >
+      <li class="tasks__list__item" v-for="(item, index) in tasks" v-bind:key="index" >
         <section class="tasks__list__item__title">
           <h4>{{ item.task }}</h4>
           <a @click="deleteHandler">X</a>
@@ -9,7 +9,7 @@
         <section class="task__list__item__info">
           <p class="creation">Created: 22/03/21</p>
           <p class="when">Do on: {{ item.date }}</p>
-          <p class="task-priority">Priority: {{ item.priority }}</p>
+          <p class="task-priority">Priority: {{ formatPriorityValue(item.priority) }}</p>
         </section>
       </li>
     </ul>
@@ -22,20 +22,51 @@ export default {
   name: 'List',
   data() {
     return {
-      tasks: []
+      tasks: [],
+       order: '',
     }
   },
   created() {
     EventBus.$on('task', (item) => {
       this.tasks.push(item)
+    });
+    EventBus.$on('order', (show) => {
+      this.order = show;
     })
   },
   methods: {
     deleteHandler(index) {
       this.tasks.splice(index, 1);
+    },
+    formatPriorityValue(value) {
+      const priorityMap = {
+        1: 'High',
+        2: 'Medium',
+        3: 'Low'
+      }
+      return priorityMap[value];
     }
-  }
+  },
+  watch: {
+    order(val) {
+      let newTasksList = [...this.tasks];
+
+      if(val === 'highPriority') {
+        newTasksList.sort(function(a,b) {
+          if(a.priority > b.priority) {
+            return 1;
+          } else {
+            return -1;
+          }
+        })
+      }
+
+      this.tasks = newTasksList;
+    }
+  },
 }
+
+
 </script>
 
 <style scoped>

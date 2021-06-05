@@ -10,9 +10,9 @@
         <label for="priority" class="header__form__selectors__label">
           Priority
           <select name="priority" id="" class="header__form__selectors__label__select" v-model="newPriority" required>
-            <option value="high" selected>High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+            <option value="1" selected>High</option>
+            <option value="2">Medium</option>
+            <option value="3">Low</option>
           </select>
         </label>
         <label for="time" class="header__form__selectors__label">
@@ -27,10 +27,10 @@
     <section class="header__order">
       <label for="" class="header__order__label">
         Order list by:
-        <select name="order" id="" class="header__order__label__list-order">
-          <option value="priority" selected>High to low priority</option>
-          <option value="priorityReverse">Low to high priority</option>
-          <option value="created">Last to first added</option>
+        <select name="order" class="header__order__label__list-order" v-model="order" @change="onChange()">
+          <option value="created" selected>Last to first added</option>
+          <option value="highPriority">High to low priority</option>
+          <option value="lowPriority">Low to high priority</option>
           <option value="createdReverse">First to last added</option>
           <option value="when">First to last to do</option>
           <option value="whenReverse">Last to first to do</option>
@@ -52,14 +52,15 @@ export default {
   data() {
     return {
       newTask: "",
-      newPriority: "high",
+      newPriority: "1",
       newDate: "",
-      itemList: []
+      taskItem: {},
+      order: "created",
     }
   },
   methods: {
     setListItem() {
-      this.itemList = {
+      this.taskItem = {
         task: this.newTask,
         priority: this.newPriority,
         date: this.newDate
@@ -67,15 +68,18 @@ export default {
     },
     resetModel() {
       this.newTask = "";
-      this.newPriority = "high";
+      this.newPriority = "1";
       this.newDate = "";
     },
     submitHandler() {
       if(this.newTask && this.newDate) {
         this.setListItem();
-        EventBus.$emit('task', this.itemList);
+        EventBus.$emit('task', this.taskItem);
       }
       this.resetModel();
+    },
+    onChange() {
+      EventBus.$emit('order', this.order);
     }
   }
 }
