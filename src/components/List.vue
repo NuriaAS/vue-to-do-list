@@ -3,13 +3,13 @@
     <ul class="tasks__list">
       <li class="tasks__list__item" v-for="(item, index) in tasks" v-bind:key="index" >
         <section class="tasks__list__item__title">
-          <h4>{{ item.task }}</h4>
+          <h4>{{ item.taskName }}</h4>
           <a @click="deleteHandler">X</a>
         </section>
         <section class="task__list__item__info">
           <p class="creation">Created: 22/03/21</p>
-          <p class="when">Do on: {{ item.date }}</p>
-          <p class="task-priority">Priority: {{ formatPriorityValue(item.priority) }}</p>
+          <p class="when">Do on: {{ item.taskDate }}</p>
+          <p class="task-priority">Priority: {{ formatPriorityValue(item.taskPriority) }}</p>
         </section>
       </li>
     </ul>
@@ -53,12 +53,30 @@ export default {
 
       if(val === 'highPriority') {
         newTasksList.sort(function(a,b) {
-          if(a.priority > b.priority) {
+          if(a.taskPriority > b.taskPriority) {
             return 1;
           } else {
             return -1;
           }
         })
+      } else if(val === 'lowPriority') {
+        newTasksList.sort(function(a,b) {
+          if(a.taskPriority > b.taskPriority) {
+            return -1;
+          } else {
+            return 1;
+          }
+        })
+      } else if(val === 'alphabetical') {
+        newTasksList.sort(function(a,b){
+          return a.taskName.localeCompare(b.taskName);
+        })
+      } else if(val === 'alphabeticalReverse') {
+        newTasksList.sort(function(a,b){
+          return b.taskName.localeCompare(a.taskName);
+        })
+      }  else {
+        return
       }
 
       this.tasks = newTasksList;

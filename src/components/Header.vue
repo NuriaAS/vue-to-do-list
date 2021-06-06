@@ -4,12 +4,12 @@
     <form class="header__form" v-on:submit.prevent="onSubmit">
       <label for="task" class="header__form__label-task">
           Task
-          <input type="text" placeholder="Write a task" name="task" class="header__form__label-task__input" v-model="newTask" required>
+          <input type="text" placeholder="Write a task" name="task" class="header__form__label-task__input" v-model="newTaskName" required>
       </label>
       <div class="header__form__selectors">
         <label for="priority" class="header__form__selectors__label">
           Priority
-          <select name="priority" id="" class="header__form__selectors__label__select" v-model="newPriority" required>
+          <select name="priority" id="" class="header__form__selectors__label__select" v-model="newTaskPriority" required>
             <option value="1" selected>High</option>
             <option value="2">Medium</option>
             <option value="3">Low</option>
@@ -17,7 +17,7 @@
         </label>
         <label for="time" class="header__form__selectors__label">
           When
-          <input type="date" name="time" id=""  class="time" v-model="newDate" required>
+          <input type="date" name="time" id="" class="time" v-model="newTaskDate" required>
         </label>
         <button class="header__form__selectors__submit-btn" @click="submitHandler">
           Save
@@ -51,9 +51,9 @@ export default {
   },
   data() {
     return {
-      newTask: "",
-      newPriority: "1",
-      newDate: "",
+      newTaskName: "",
+      newTaskPriority: "1",
+      newTaskDate: "",
       taskItem: {},
       order: "created",
     }
@@ -61,18 +61,18 @@ export default {
   methods: {
     setListItem() {
       this.taskItem = {
-        task: this.newTask,
-        priority: this.newPriority,
-        date: this.newDate
+        taskName: this.newTaskName,
+        taskPriority: this.newTaskPriority,
+        taskDate: this.newTaskDate
       } 
     },
     resetModel() {
-      this.newTask = "";
-      this.newPriority = "1";
-      this.newDate = "";
+      this.newTaskName = "";
+      this.newTaskPriority = "1";
+      this.newTaskDate = "";
     },
     submitHandler() {
-      if(this.newTask && this.newDate) {
+      if(this.newTaskName && this.newTaskDate) {
         this.setListItem();
         EventBus.$emit('task', this.taskItem);
       }
