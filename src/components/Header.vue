@@ -29,9 +29,9 @@
         Order list by:
         <select name="order" class="header__order__label__list-order" v-model="order" @change="onChange()">
           <option value="created" selected>Last to first added</option>
+          <option value="createdReverse">First to last added</option>
           <option value="highPriority">High to low priority</option>
           <option value="lowPriority">Low to high priority</option>
-          <option value="createdReverse">First to last added</option>
           <option value="when">First to last to do</option>
           <option value="whenReverse">Last to first to do</option>
           <option value="alphabetical">From A to Z</option>
@@ -54,6 +54,7 @@ export default {
       newTaskName: "",
       newTaskPriority: "1",
       newTaskDate: "",
+      newtaskCreation: "",
       taskItem: {},
       order: "created",
     }
@@ -63,7 +64,8 @@ export default {
       this.taskItem = {
         taskName: this.newTaskName,
         taskPriority: this.newTaskPriority,
-        taskDate: this.newTaskDate
+        taskDate: new Date(this.newTaskDate),
+        taskCreated: this.newtaskCreation
       } 
     },
     resetModel() {
@@ -73,6 +75,7 @@ export default {
     },
     submitHandler() {
       if(this.newTaskName && this.newTaskDate) {
+        this.newtaskCreation = new Date();
         this.setListItem();
         EventBus.$emit('task', this.taskItem);
       }

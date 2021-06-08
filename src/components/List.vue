@@ -7,8 +7,8 @@
           <a @click="deleteHandler">X</a>
         </section>
         <section class="task__list__item__info">
-          <p class="creation">Created: 22/03/21</p>
-          <p class="when">Do on: {{ item.taskDate }}</p>
+          <p class="creation">Created: {{ formatDate(item.taskCreated) }}</p>
+          <p class="when">Do on: {{ formatDate(item.taskDate) }}</p>
           <p class="task-priority">Priority: {{ formatPriorityValue(item.taskPriority) }}</p>
         </section>
       </li>
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       tasks: [],
-       order: '',
+      order: '',
+      // tasks: [{"taskName":"AB","taskPriority":"2","taskDate":"2021-06-24"},{"taskName":"BA","taskPriority":"1","taskDate":"2021-06-23"},{"taskName":"BZ","taskPriority":"1","taskDate":"2021-06-24"},{"taskName":"AA","taskPriority":"1","taskDate":"2021-06-23"}]
     }
   },
   created() {
@@ -45,11 +46,19 @@ export default {
         3: 'Low'
       }
       return priorityMap[value];
+    },
+    formatDate(date) {
+      date = `${date.getDate()}${'/'}${date.getMonth() + 1}${'/'}${date.getFullYear()}`
+      return date
+    },
+    keyIdSetTime() {
+     Date.now()
     }
   },
   watch: {
     order(val) {
       let newTasksList = [...this.tasks];
+      
 
       if(val === 'highPriority') {
         newTasksList.sort(function(a,b) {
@@ -66,7 +75,7 @@ export default {
           } else {
             return 1;
           }
-        })
+      })
       } else if(val === 'alphabetical') {
         newTasksList.sort(function(a,b){
           return a.taskName.localeCompare(b.taskName);
@@ -75,13 +84,22 @@ export default {
         newTasksList.sort(function(a,b){
           return b.taskName.localeCompare(a.taskName);
         })
-      }  else {
-        return
+      } else if (val === 'when') {
+        newTasksList.sort((a, b) => b.taskDate - a.taskDate);
+      } else if (val === 'whenReverse') {
+        newTasksList.sort((a, b) => a.taskDate - b.taskDate);
+      }  else if (val === 'createdReverse') {
+        newTasksList.sort((a, b) => b.taskCreated - a.taskCreated);
+        
+      } else if (val === 'created') {
+         newTasksList.sort((a, b) => a.taskCreated - b.taskCreated);
       }
-
       this.tasks = newTasksList;
     }
   },
+  computed: {
+    
+  }
 }
 
 
