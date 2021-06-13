@@ -17,7 +17,7 @@
         </label>
         <label for="time" class="header__form__selectors__label">
           When
-          <input type="date" name="time" id="" class="time" v-model="newTaskDate" required>
+          <input type="date" name="time" id="date" class="time" v-model="newTaskDate"/>
         </label>
         <button class="header__form__selectors__submit-btn" @click="submitHandler">
           Save
@@ -27,8 +27,8 @@
     <section class="header__order">
       <label for="" class="header__order__label">
         Order list by:
-        <select name="order" class="header__order__label__list-order" v-model="order" @change="onChange()">
           <option value="created" selected>Last to first added</option>
+        <select name="order" class="header__order__label__list-order" id="order" v-model="order" @change="onChange()">
           <option value="createdReverse">First to last added</option>
           <option value="highPriority">High to low priority</option>
           <option value="lowPriority">Low to high priority</option>
