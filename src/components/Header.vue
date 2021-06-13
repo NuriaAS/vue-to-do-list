@@ -1,27 +1,25 @@
 <template>
   <div class="header">
     <h1>{{ msg }}</h1>
-    <form class="header__form" v-on:submit.prevent="onSubmit">
+    <form class="header__form" @submit.prevent="submitHandler">
       <label for="task" class="header__form__label-task">
-          Task
-          <input type="text" placeholder="Write a task" name="task" class="header__form__label-task__input" v-model="newTaskName" required>
+          Task <span>*</span>
+          <input type="text" placeholder="Write a task" name="task" class="header__form__label-task__input" v-model="newTaskName" @keyup="requiredInputHandler">
       </label>
       <div class="header__form__selectors">
         <label for="priority" class="header__form__selectors__label">
           Priority
-          <select name="priority" id="" class="header__form__selectors__label__select" v-model="newTaskPriority" required>
+          <select name="priority" id="" class="header__form__selectors__label__select" v-model="newTaskPriority">
             <option value="1" selected>High</option>
             <option value="2">Medium</option>
             <option value="3">Low</option>
           </select>
         </label>
         <label for="time" class="header__form__selectors__label">
-          When
-          <input type="date" name="time" id="date" class="time" v-model="newTaskDate"/>
+          When <span>*</span>
+          <input type="date" name="time" id="date" class="time" v-model="newTaskDate" @change="requiredInputHandler"/>
         </label>
-        <button class="header__form__selectors__submit-btn" @click="submitHandler">
-          Save
-        </button>
+        <input type="submit" value="Save" class="header__form__selectors__submit-btn" :disabled="!validated"/>
       </div>
     </form>
     <section class="header__order">
@@ -57,6 +55,7 @@ export default {
       newtaskCreation: "",
       taskItem: {},
       order: "created",
+      validated: false,
     }
   },
   methods: {
@@ -68,18 +67,23 @@ export default {
         taskCreated: this.newtaskCreation
       } 
     },
+    submitHandler() {
+      this.newtaskCreation = new Date();
+      this.setListItem();
+      EventBus.$emit('task', this.taskItem);
+      this.resetModel();
+    },
     resetModel() {
       this.newTaskName = "";
       this.newTaskPriority = "1";
       this.newTaskDate = "";
     },
-    submitHandler() {
+    requiredInputHandler() {
       if(this.newTaskName && this.newTaskDate) {
-        this.newtaskCreation = new Date();
-        this.setListItem();
-        EventBus.$emit('task', this.taskItem);
+        this.validated = true;
+      } else {
+        this.validated = false;
       }
-      this.resetModel();
     },
     onChange() {
       EventBus.$emit('order', this.order);
@@ -117,21 +121,34 @@ export default {
     width: 100%;
     text-align: left;
   }
+  .header__form__selectors__submit-btn:disabled, .header__form__selectors__submit-btn:disabled:hover
   .header__form__selectors__submit-btn {
     border: none;
-    background-color: rosybrown;
     color: white;
     font-weight: 600;
     border-radius: 3px;
     flex-basis: 15%;
     height: 100%;
     padding: 0.45rem;
-    cursor: pointer;
   }
+  .header__form__selectors__submit-btn:disabled {
+    background-color: rgba(188, 143, 143, 0.5);
+  }
+  .header__form__selectors__submit-btn:disabled:hover {
+    cursor: unset;
+    border: none;
+    background-color: rgba(188, 143, 143, 0.5);
+    color: white;
+  }
+  .header__form__selectors__submit-btn {
+    background-color: rgba(188, 143, 143, 1);
+  }
+
   .header__form__selectors__submit-btn:hover {
     border: 1px solid rosybrown;
     background-color: transparent;
     color: rosybrown;
+    cursor: pointer;
   }
   input, 
   select {
