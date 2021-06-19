@@ -5,6 +5,18 @@
       <label for="task" class="header__form__label-task">
           Task <span>*</span>
           <input type="text" placeholder="Write a task" name="task" class="header__form__label-task__input" v-model="newTaskName" @keyup="requiredInputHandler">
+      <input-group 
+        id="task"
+        label="Task"
+        type="text"
+        :inputVal.sync="newTaskName"
+      />
+      <input-group 
+        id="inputDateName"
+        label="labelDate"
+        type="inputDateType"
+        :inputVal.sync="newTaskDate"
+      />
       </label>
       <div class="header__form__selectors">
         <label for="priority" class="header__form__selectors__label">
@@ -42,10 +54,14 @@
 
 <script>
 import { EventBus } from '@/event-bus.js';
+import InputGroup from './InputGroup.vue';
 export default {
   name: 'ToDoList',
   props: {
     msg: String
+  },
+  components: {
+    InputGroup,
   },
   data() {
     return {
@@ -55,7 +71,10 @@ export default {
       newtaskCreation: "",
       taskItem: {},
       order: "created",
+      taskInputWarning: false,
+      dateInputWarning: false,
       validated: false,
+      validationErrors: {},
     }
   },
   methods: {
