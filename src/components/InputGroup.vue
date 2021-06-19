@@ -15,10 +15,15 @@
             }"
             v-model="inputVal"
             @input='$emit("update:inputVal",inputVal)'
+        <input
+            :id="id"
+            :name="id"
+            :type="type"
+            v-model="inputVal"
+            @blur="changeHandler"
         >
         <span
-            v-show="!isdValid"
-            class="invalid-feedback"
+            v-show="isEvaluated && !isValid"
         >
             {{ errorMessage }}
         </span>
@@ -30,6 +35,9 @@ export default {
     data() {
         return {
             errorMessage: "*This field is required",
+            inputVal: '',
+            isEvaluated: false,
+            isValid: false
         }
     },
     props: {
@@ -45,16 +53,16 @@ export default {
             type: String,
             required: true,
         },
-         inputVal: {
-            type: String,
-            default: '',
-        },
     },
-    computed: {
-        isValid() {
-            return !this.errorMessage;
-        },
-        
+    methods: {
+        changeHandler() {
+            this.isEvaluated = true;
+            if(this.inputVal) {
+                this.isValid = true
+            } else {
+                this.isValid = false
+            }
+        }
     },
 }
 </script>
