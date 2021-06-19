@@ -25,8 +25,8 @@
     <section class="header__order">
       <label for="" class="header__order__label">
         Order list by:
-          <option value="created" selected>Last to first added</option>
         <select name="order" class="header__order__label__list-order" id="order" v-model="order" @change="onChange()">
+          <option value="created" selected>Last to first added</option>
           <option value="createdReverse">First to last added</option>
           <option value="highPriority">High to low priority</option>
           <option value="lowPriority">Low to high priority</option>
