@@ -9,13 +9,13 @@
         id="task"
         label="Task"
         type="text"
-        :inputVal.sync="newTaskName"
+        @inputEvent="taskNameEventHandler"
       />
       <input-group 
         id="inputDateName"
         label="labelDate"
-        type="inputDateType"
-        :inputVal.sync="newTaskDate"
+        type="date"
+        @inputEvent="dateEventHandler"
       />
       </label>
       <div class="header__form__selectors">
@@ -78,6 +78,12 @@ export default {
     }
   },
   methods: {
+    taskNameEventHandler(value) {
+      this.newTaskName= value
+    },
+    dateEventHandler(value) {
+      this.newTaskDate = value;
+    },
     setListItem() {
       this.taskItem = {
         taskName: this.newTaskName,

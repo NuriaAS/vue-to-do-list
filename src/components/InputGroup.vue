@@ -9,16 +9,6 @@
             :id="id"
             :name="id"
             :type="type"
-            :class="{
-                'is-invalid': !isValid,
-                'form-control': true,
-            }"
-            v-model="inputVal"
-            @input='$emit("update:inputVal",inputVal)'
-        <input
-            :id="id"
-            :name="id"
-            :type="type"
             v-model="inputVal"
             @blur="changeHandler"
         >
@@ -57,8 +47,9 @@ export default {
     methods: {
         changeHandler() {
             this.isEvaluated = true;
+            this.$emit("inputEvent",this.inputVal)
             if(this.inputVal) {
-                this.isValid = true
+                this.isValid = true;
             } else {
                 this.isValid = false
             }
