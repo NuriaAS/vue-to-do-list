@@ -2,22 +2,20 @@
   <div class="header">
     <h1>{{ msg }}</h1>
     <form class="header__form" @submit.prevent="submitHandler">
-      <label for="task" class="header__form__label-task">
-          Task <span>*</span>
-          <input type="text" placeholder="Write a task" name="task" class="header__form__label-task__input" v-model="newTaskName" @keyup="requiredInputHandler">
       <input-group 
         id="task"
         label="Task"
         type="text"
         @inputEvent="taskNameEventHandler"
+        ref="inputName"
       />
       <input-group 
         id="inputDateName"
         label="labelDate"
         type="date"
         @inputEvent="dateEventHandler"
+        ref="inputDate"
       />
-      </label>
       <div class="header__form__selectors">
         <label for="priority" class="header__form__selectors__label">
           Priority
@@ -26,10 +24,6 @@
             <option value="2">Medium</option>
             <option value="3">Low</option>
           </select>
-        </label>
-        <label for="time" class="header__form__selectors__label">
-          When <span>*</span>
-          <input type="date" name="time" id="date" class="time" v-model="newTaskDate" @change="requiredInputHandler"/>
         </label>
         <input type="submit" value="Save" class="header__form__selectors__submit-btn" :disabled="!validated"/>
       </div>
@@ -55,6 +49,7 @@
 <script>
 import { EventBus } from '@/event-bus.js';
 import InputGroup from './InputGroup.vue';
+
 export default {
   name: 'ToDoList',
   props: {
@@ -71,18 +66,17 @@ export default {
       newtaskCreation: "",
       taskItem: {},
       order: "created",
-      taskInputWarning: false,
-      dateInputWarning: false,
       validated: false,
-      validationErrors: {},
     }
   },
   methods: {
     taskNameEventHandler(value) {
-      this.newTaskName= value
+      this.newTaskName= value;
+      this.validateForm()
     },
     dateEventHandler(value) {
       this.newTaskDate = value;
+      this.validateForm()
     },
     setListItem() {
       this.taskItem = {
@@ -97,13 +91,16 @@ export default {
       this.setListItem();
       EventBus.$emit('task', this.taskItem);
       this.resetModel();
+      this.$refs.inputName.resetValue();
+      this.$refs.inputDate.resetValue();
     },
     resetModel() {
       this.newTaskName = "";
       this.newTaskPriority = "1";
       this.newTaskDate = "";
+      this.validated = false;
     },
-    requiredInputHandler() {
+    validateForm() {
       if(this.newTaskName && this.newTaskDate) {
         this.validated = true;
       } else {
@@ -113,7 +110,8 @@ export default {
     onChange() {
       EventBus.$emit('order', this.order);
     }
-  }
+  },
+
 }
 </script>
 

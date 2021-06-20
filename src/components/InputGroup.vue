@@ -10,7 +10,8 @@
             :name="id"
             :type="type"
             v-model="inputVal"
-            @blur="changeHandler"
+            @input="changeHandler"
+            class="input_style"
         >
         <span
             v-show="isEvaluated && !isValid"
@@ -47,12 +48,17 @@ export default {
     methods: {
         changeHandler() {
             this.isEvaluated = true;
-            this.$emit("inputEvent",this.inputVal)
+            this.$emit("inputEvent", this.inputVal)
             if(this.inputVal) {
                 this.isValid = true;
             } else {
                 this.isValid = false
             }
+        },
+        resetValue() {
+            this.inputVal = '';
+            this.isEvaluated = false;
+            this.isValid = false
         }
     },
 }
