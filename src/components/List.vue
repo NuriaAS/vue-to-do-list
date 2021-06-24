@@ -58,24 +58,11 @@ export default {
   watch: {
     order(val) {
       let newTasksList = [...this.tasks];
-      
-
-      if(val === 'highPriority') {
-        newTasksList.sort(function(a,b) {
-          if(a.taskPriority > b.taskPriority) {
-            return 1;
-          } else {
-            return -1;
-          }
-        })
+      if(val === 'highPriority' ) {
+          newTasksList.sort((a, b) => a.taskPriority - b.taskPriority);
+     
       } else if(val === 'lowPriority') {
-        newTasksList.sort(function(a,b) {
-          if(a.taskPriority > b.taskPriority) {
-            return -1;
-          } else {
-            return 1;
-          }
-      })
+        newTasksList.sort((a, b) => b.taskPriority - a.taskPriority);
       } else if(val === 'alphabetical') {
         newTasksList.sort(function(a,b){
           return a.taskName.localeCompare(b.taskName);
