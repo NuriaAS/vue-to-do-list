@@ -24,20 +24,22 @@ export default {
     return {
       tasks: [],
       order: '',
-      // tasks: [{"taskName":"AB","taskPriority":"2","taskDate":"2021-06-24"},{"taskName":"BA","taskPriority":"1","taskDate":"2021-06-23"},{"taskName":"BZ","taskPriority":"1","taskDate":"2021-06-24"},{"taskName":"AA","taskPriority":"1","taskDate":"2021-06-23"}]
     }
   },
-  created() {
+  mounted() {
+    this.retrieveTasks();
     EventBus.$on('task', (item) => {
-      this.tasks.push(item)
+      this.tasks.push(item);
+      this.persistTasks();     
     });
     EventBus.$on('order', (show) => {
       this.order = show;
-    })
+    });
   },
   methods: {
     deleteHandler(index) {
       this.tasks.splice(index, 1);
+       this.persistTasks()
     },
     formatPriorityValue(value) {
       const priorityMap = {
@@ -53,8 +55,20 @@ export default {
     },
     keyIdSetTime() {
      Date.now()
+    },
+    persistTasks() {
+      const parsed = JSON.stringify(this.tasks);
+      localStorage.setItem('tasks', parsed);
+    },
+    retrieveTasks() {
+      if(localStorage.getItem('tasks')) {
+        const storedData = JSON.parse(localStorage.getItem('tasks'));
+        this.tasks = storedData;
+      }
     }
   },
+
+
   watch: {
     order(val) {
       let newTasksList = [...this.tasks];
@@ -82,10 +96,7 @@ export default {
          newTasksList.sort((a, b) => a.taskCreated - b.taskCreated);
       }
       this.tasks = newTasksList;
-    }
-  },
-  computed: {
-    
+    },
   }
 }
 
