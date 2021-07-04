@@ -1,7 +1,7 @@
 <template>
   <section class="tasks">
     <ul class="tasks__list">
-      <li class="tasks__list__item" v-for="(item, index) in tasks" v-bind:key="index" >
+      <li class="tasks__list__item" v-for="item in tasks" :key="item.taskCreationDateSort" >
         <section class="tasks__list__item__title">
           <h4>{{ item.taskName }}</h4>
           <a @click="deleteHandler">X</a>
