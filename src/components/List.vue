@@ -7,8 +7,8 @@
           <a @click="deleteHandler">X</a>
         </section>
         <section class="task__list__item__info">
-          <p class="creation">Created: {{ formatDate(item.taskCreated) }}</p>
-          <p class="when">Do on: {{ formatDate(item.taskDate) }}</p>
+          <p class="creation">Created: {{ item.taskCreationDateFormated }}</p>
+          <p class="when">Do on: {{ item.taskExecutionDateFormated }}</p>
           <p class="task-priority">Priority: {{ formatPriorityValue(item.taskPriority) }}</p>
         </section>
       </li>
@@ -48,13 +48,6 @@ export default {
         3: 'Low'
       }
       return priorityMap[value];
-    },
-    formatDate(date) {
-      date = `${date.getDate()}${'/'}${date.getMonth() + 1}${'/'}${date.getFullYear()}`
-      return date
-    },
-    keyIdSetTime() {
-     Date.now()
     },
     persistTasks() {
       const parsed = JSON.stringify(this.tasks);

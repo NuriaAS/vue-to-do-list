@@ -63,7 +63,6 @@ export default {
       newTaskName: "",
       newTaskPriority: "1",
       newTaskDate: "",
-      newtaskCreation: "",
       taskItem: {},
       order: "created",
       validated: false,
@@ -83,11 +82,12 @@ export default {
         taskName: this.newTaskName,
         taskPriority: this.newTaskPriority,
         taskDate: new Date(this.newTaskDate),
-        taskCreated: this.newtaskCreation
+        taskExecutionDateFormated: this.formatDate(new Date(this.newTaskDate)),
+        taskCreated: new Date(),
+        taskCreationDateFormated: this.formatDate(new Date())
       } 
     },
     submitHandler() {
-      this.newtaskCreation = new Date();
       this.setListItem();
       EventBus.$emit('task', this.taskItem);
       this.resetModel();
@@ -109,7 +109,10 @@ export default {
     },
     onChange() {
       EventBus.$emit('order', this.order);
-    }
+    },
+    formatDate(date) {
+      return `${date.getDate()}${'/'}${date.getMonth() + 1}${'/'}${date.getFullYear()}`;
+    },
   },
 
 }
