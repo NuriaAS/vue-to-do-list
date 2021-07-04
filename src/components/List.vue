@@ -79,14 +79,14 @@ export default {
           return b.taskName.localeCompare(a.taskName);
         })
       } else if (val === 'when') {
-        newTasksList.sort((a, b) => b.taskDate - a.taskDate);
+        newTasksList.sort((a, b) => b.taskDateExecutionSort - a.taskDateExecutionSort);
       } else if (val === 'whenReverse') {
-        newTasksList.sort((a, b) => a.taskDate - b.taskDate);
+        newTasksList.sort((a, b) => a.taskDateExecutionSort - b.taskDateExecutionSort);
       }  else if (val === 'createdReverse') {
-        newTasksList.sort((a, b) => b.taskCreated - a.taskCreated);
+        newTasksList.sort((a, b) => b.taskCreationDateSort - a.taskCreationDateSort);
         
       } else if (val === 'created') {
-         newTasksList.sort((a, b) => a.taskCreated - b.taskCreated);
+         newTasksList.sort((a, b) => a.taskCreationDateSort - b.taskCreationDateSort);
       }
       this.tasks = newTasksList;
     },

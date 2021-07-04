@@ -81,9 +81,9 @@ export default {
       this.taskItem = {
         taskName: this.newTaskName,
         taskPriority: this.newTaskPriority,
-        taskDate: new Date(this.newTaskDate),
+        taskDateExecutionSort: (new Date(this.newTaskDate)).getTime(),
         taskExecutionDateFormated: this.formatDate(new Date(this.newTaskDate)),
-        taskCreated: new Date(),
+        taskCreationDateSort: (new Date()).getTime(),
         taskCreationDateFormated: this.formatDate(new Date())
       } 
     },
