@@ -2,7 +2,7 @@
     <li class="tasks__list__item">
         <section class="tasks__list__item__title">
           <h4>{{ taskName }}</h4>
-          <a @click="clickHandler">X</a>
+          <button @click="clickHandler">X</button>
         </section>
         <section class="task__list__item__info">
           <p class="creation">Created: {{ taskCreationDate }}</p>
@@ -37,11 +37,15 @@ export default ({
             type: String,
             requiered: true
         },
+        taskId: {
+          type: Number,
+          required: true
+        }
     },
     methods: {
-        clickHandler() {
-            this.$emit("clickEvent", null)
-        }
+      clickHandler() {
+        this.$emit("clickEvent", this.taskId);
+      }
     }
 })
 </script>

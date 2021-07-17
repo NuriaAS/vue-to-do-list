@@ -2,9 +2,10 @@
   <section class="tasks">
     <ul class="tasks__list">
       <list-item 
-        v-for="item in tasks" 
+        v-for="(item) in tasks" 
         :key="item.taskCreationDateSort"
         :taskName="item.taskName"
+        :taskId="item.taskCreationDateSort"
         :taskCreationDate="item.taskCreationDateFormated"
         :taskExecutionDate="item.taskExecutionDateFormated"
         :taskPriority="formatPriorityValue(item.taskPriority)"
@@ -39,9 +40,9 @@ export default {
     });
   },
   methods: {
-    deleteHandler(index) {
-      console.log(index);
-      this.tasks.splice(index, 1);
+    deleteHandler(value) {
+      let newTasks = this.tasks.filter(task => task.taskCreationDateSort !== value);
+      this.tasks = newTasks;
       this.persistTasks();
     },
     formatPriorityValue(value) {
