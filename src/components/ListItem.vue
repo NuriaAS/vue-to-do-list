@@ -1,7 +1,8 @@
 <template>
     <li class="tasks__list__item">
         <section class="tasks__list__item__title">
-          <h4>{{ taskName }}</h4>
+          <input type="checkbox" v-model="isDone"> 
+          <h4 :class="isDone ? 'task-done' : null">{{ taskName }}</h4>
           <button @click="clickHandler">X</button>
         </section>
         <section class="task__list__item__info">
@@ -17,7 +18,7 @@ export default ({
     name: 'ListItem',
     data() {
         return {
-
+          isDone: false,
         }
     },
     props: {
@@ -46,7 +47,7 @@ export default ({
       clickHandler() {
         this.$emit("clickEvent", this.taskId);
       }
-    }
+    },
 })
 </script>
 <style scoped>
@@ -79,5 +80,9 @@ export default ({
 }
 .tasks__list__item__info p:first-child {
   margin-left: 0;
+}
+.task-done {
+  text-decoration: line-through #53a153;
+  color: #53a153;
 }
 </style>
