@@ -23,20 +23,20 @@ export default ({
     },
     props: {
         taskName: {
-            type: String,
-            required: true
+          type: String,
+          required: true
         },
         taskCreationDate: {
-            type: String,
-            requiered: true
+          type: String,
+          required: true
         },
         taskExecutionDate: {
-            type: String,
-            requiered: true
+          type: String,
+          required: true
         },
         taskPriority: {
-            type: String,
-            requiered: true
+          type: String,
+          required: true
         },
         taskId: {
           type: Number,
