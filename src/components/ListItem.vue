@@ -2,7 +2,7 @@
     <li class="tasks__list__item">
         <section class="tasks__list__item__title">
           <input type="checkbox" v-model="isDone"> 
-          <h4 :class="isDone ? 'task-done' : null">{{ taskName }}</h4>
+          <h4 :class="taskFinished">{{ taskName }}</h4>
           <button @click="clickHandler">X</button>
         </section>
         <section class="task__list__item__info">
@@ -48,6 +48,11 @@ export default ({
         this.$emit("clickEvent", this.taskId);
       }
     },
+    computed: {
+      taskFinished() {
+        return this.isDone ? 'task-done' : null;
+      }
+    }
 })
 </script>
 <style scoped>
