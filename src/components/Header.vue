@@ -84,7 +84,8 @@ export default {
         taskDateExecutionSort: (new Date(this.newTaskDate)).getTime(),
         taskExecutionDateFormated: this.formatDate(new Date(this.newTaskDate)),
         taskCreationDateSort: (new Date()).getTime(),
-        taskCreationDateFormated: this.formatDate(new Date())
+        taskCreationDateFormated: this.formatDate(new Date()),
+        taskIsDone: false,
       } 
     },
     submitHandler() {

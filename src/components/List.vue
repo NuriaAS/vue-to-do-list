@@ -4,12 +4,14 @@
       <list-item 
         v-for="(item) in tasks" 
         :key="item.taskCreationDateSort"
+        :taskIsDone="item.taskIsDone"
         :taskName="item.taskName"
         :taskId="item.taskCreationDateSort"
         :taskCreationDate="item.taskCreationDateFormated"
         :taskExecutionDate="item.taskExecutionDateFormated"
         :taskPriority="formatPriorityValue(item.taskPriority)"
         @clickEvent="deleteHandler"
+        @changeEvent="checkHandler"
       />
     </ul>
   </section>
@@ -44,6 +46,24 @@ export default {
       let newTasks = this.tasks.filter(task => task.taskCreationDateSort !== value);
       this.tasks = newTasks;
       this.persistTasks();
+    },
+    callback(item, id) {
+      if (item.taskCreationDateSort === id) {
+        if(item.taskIsDone === true) {
+          item.taskIsDone === false;
+          return item;
+        } else {
+          item.taskIsDone = true;
+          return item;
+        }
+      } else {
+        return item;
+      }
+    },
+    checkHandler(value) {
+      let newTasks = this.tasks.map(task => this.callback(task, value));
+      this.tasks = newTasks;
+      this.persistTasks();      
     },
     formatPriorityValue(value) {
       const priorityMap = {

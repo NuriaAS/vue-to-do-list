@@ -1,7 +1,7 @@
 <template>
     <li class="tasks__list__item">
         <section class="tasks__list__item__title">
-          <input type="checkbox" v-model="isDone"> 
+          <input type="checkbox" v-model="isDone" @change="changeHandler"> 
           <h4 :class="taskFinished">{{ taskName }}</h4>
           <button @click="clickHandler">X</button>
         </section>
@@ -17,9 +17,9 @@
 export default ({
     name: 'ListItem',
     data() {
-        return {
-          isDone: false,
-        }
+      return {
+        isDone: this.taskIsDone,
+      }
     },
     props: {
         taskName: {
@@ -41,11 +41,18 @@ export default ({
         taskId: {
           type: Number,
           required: true
+        },
+        taskIsDone: {
+          type: Boolean,
+          required: true,
         }
     },
     methods: {
       clickHandler() {
         this.$emit("clickEvent", this.taskId);
+      },
+      changeHandler() {
+        this.$emit("changeEvent", this.taskId);
       }
     },
     computed: {
