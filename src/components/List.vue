@@ -47,21 +47,16 @@ export default {
       this.tasks = newTasks;
       this.persistTasks();
     },
-    callback(item, id) {
+    toggleDoneState(item, id) {
       if (item.taskCreationDateSort === id) {
-        if(item.taskIsDone === true) {
-          item.taskIsDone === false;
-          return item;
-        } else {
-          item.taskIsDone = true;
-          return item;
-        }
+        item.taskIsDone = !item.taskIsDone;
+        return item;
       } else {
         return item;
       }
     },
     checkHandler(value) {
-      let newTasks = this.tasks.map(task => this.callback(task, value));
+      let newTasks = this.tasks.map(task => this.toggleDoneState(task, value));
       this.tasks = newTasks;
       this.persistTasks();      
     },
