@@ -82,27 +82,27 @@ export default {
   watch: {
     order(val) {
       let newTasksList = [...this.tasks];
-      if(val === 'highPriority' ) {
+      if(val === 'taskPriority' ) {
           newTasksList.sort((a, b) => a.taskPriority - b.taskPriority);
      
-      } else if(val === 'lowPriority') {
+      } else if(val === 'taskPriorityReverse') {
         newTasksList.sort((a, b) => b.taskPriority - a.taskPriority);
-      } else if(val === 'alphabetical') {
+      } else if(val === 'taskName') {
         newTasksList.sort(function(a,b){
           return a.taskName.localeCompare(b.taskName);
         })
-      } else if(val === 'alphabeticalReverse') {
+      } else if(val === 'taskNameReverse') {
         newTasksList.sort(function(a,b){
           return b.taskName.localeCompare(a.taskName);
         })
-      } else if (val === 'when') {
+      } else if (val === 'taskDateExecutionSort') {
         newTasksList.sort((a, b) => b.taskDateExecutionSort - a.taskDateExecutionSort);
-      } else if (val === 'whenReverse') {
+      } else if (val === 'taskDateExecutionSortReverse') {
         newTasksList.sort((a, b) => a.taskDateExecutionSort - b.taskDateExecutionSort);
-      }  else if (val === 'createdReverse') {
+      }  else if (val === 'taskCreationDateSortReverse') {
         newTasksList.sort((a, b) => b.taskCreationDateSort - a.taskCreationDateSort);
         
-      } else if (val === 'created') {
+      } else if (val === 'taskCreationDateSort') {
          newTasksList.sort((a, b) => a.taskCreationDateSort - b.taskCreationDateSort);
       }
       this.tasks = newTasksList;

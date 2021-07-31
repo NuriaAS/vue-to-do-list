@@ -32,14 +32,14 @@
       <label for="" class="header__order__label">
         Order list by:
         <select name="order" class="header__order__label__list-order" id="order" v-model="order" @change="onChange()">
-          <option value="created" selected>Last to first added</option>
-          <option value="createdReverse">First to last added</option>
-          <option value="highPriority">High to low priority</option>
-          <option value="lowPriority">Low to high priority</option>
-          <option value="when">First to last to do</option>
-          <option value="whenReverse">Last to first to do</option>
-          <option value="alphabetical">From A to Z</option>
-          <option value="alphabeticalReverse">From Z to A</option>
+          <option value="taskCreationDateSort" selected>Last to first added</option>
+          <option value="taskCreationDateSortReverse">First to last added</option>
+          <option value="taskPriority">High to low priority</option>
+          <option value="taskPriorityReverse">Low to high priority</option>
+          <option value="taskDateExecutionSort">First to last to do</option>
+          <option value="taskDateExecutionSortReverse">Last to first to do</option>
+          <option value="taskName">From A to Z</option>
+          <option value="taskNameReverse">From Z to A</option>
         </select>
       </label>
     </section>
