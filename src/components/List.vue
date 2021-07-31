@@ -82,28 +82,23 @@ export default {
   watch: {
     order(val) {
       let newTasksList = [...this.tasks];
-      if(val === 'taskPriority' ) {
-          newTasksList.sort((a, b) => b.taskPriority - a.taskPriority);
-     
-      } else if(val === 'taskPriorityReverse') {
-        newTasksList.sort((a, b) => a.taskPriority - b.taskPriority);
-      } else if(val === 'taskName') {
-        newTasksList.sort(function(a,b){
-          return a.taskName.localeCompare(b.taskName);
-        })
-      } else if(val === 'taskNameReverse') {
-        newTasksList.sort(function(a,b){
-          return b.taskName.localeCompare(a.taskName);
-        })
-      } else if (val === 'taskDateExecutionSort') {
-        newTasksList.sort((a, b) => b.taskDateExecutionSort - a.taskDateExecutionSort);
-      } else if (val === 'taskDateExecutionSortReverse') {
-        newTasksList.sort((a, b) => a.taskDateExecutionSort - b.taskDateExecutionSort);
-      }  else if (val === 'taskCreationDateSortReverse') {
-        newTasksList.sort((a, b) => b.taskCreationDateSort - a.taskCreationDateSort);
-        
-      } else if (val === 'taskCreationDateSort') {
-         newTasksList.sort((a, b) => a.taskCreationDateSort - b.taskCreationDateSort);
+      if(val.includes('taskName')) {
+        if(val.includes('Reverse')) {
+          newTasksList.sort(function(a,b){
+            return b.taskName.localeCompare(a.taskName);
+          })
+        } else {
+          newTasksList.sort(function(a,b){
+            return a.taskName.localeCompare(b.taskName);
+          })
+        }
+      } else {
+        if (val.includes('Reverse')) {
+          const valueFormated = val.replace("Reverse", "");
+          newTasksList.sort((a, b) => a[valueFormated] - b[valueFormated]);
+        } else {
+          newTasksList.sort((a, b) => b[val] - a[val]);
+        }
       }
       this.tasks = newTasksList;
     },
