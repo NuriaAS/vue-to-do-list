@@ -20,9 +20,9 @@
         <label for="priority" class="header__form__selectors__label">
           Priority
           <select name="priority" id="" class="header__form__selectors__label__select" v-model="newTaskPriority">
-            <option value="1" selected>High</option>
+            <option value="3">High</option>
             <option value="2">Medium</option>
-            <option value="3">Low</option>
+            <option value="1">Low</option>
           </select>
         </label>
         <input type="submit" value="Save" class="header__form__selectors__submit-btn" :disabled="!validated"/>
@@ -32,7 +32,7 @@
       <label for="" class="header__order__label">
         Order list by:
         <select name="order" class="header__order__label__list-order" id="order" v-model="order" @change="onChange()">
-          <option value="taskCreationDateSort" selected>Last to first added</option>
+          <option value="taskCreationDateSort">Last to first added</option>
           <option value="taskCreationDateSortReverse">First to last added</option>
           <option value="taskPriority">High to low priority</option>
           <option value="taskPriorityReverse">Low to high priority</option>
@@ -61,10 +61,10 @@ export default {
   data() {
     return {
       newTaskName: "",
-      newTaskPriority: "1",
+      newTaskPriority: "3",
       newTaskDate: "",
       taskItem: {},
-      order: "created",
+      order: "taskCreationDateSort",
       validated: false,
     }
   },
@@ -97,7 +97,7 @@ export default {
     },
     resetModel() {
       this.newTaskName = "";
-      this.newTaskPriority = "1";
+      this.newTaskPriority = "3";
       this.newTaskDate = "";
       this.validated = false;
     },

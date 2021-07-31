@@ -62,9 +62,9 @@ export default {
     },
     formatPriorityValue(value) {
       const priorityMap = {
-        1: 'High',
+        1: 'Low',
         2: 'Medium',
-        3: 'Low'
+        3: 'High'
       }
       return priorityMap[value];
     },
@@ -83,10 +83,10 @@ export default {
     order(val) {
       let newTasksList = [...this.tasks];
       if(val === 'taskPriority' ) {
-          newTasksList.sort((a, b) => a.taskPriority - b.taskPriority);
+          newTasksList.sort((a, b) => b.taskPriority - a.taskPriority);
      
       } else if(val === 'taskPriorityReverse') {
-        newTasksList.sort((a, b) => b.taskPriority - a.taskPriority);
+        newTasksList.sort((a, b) => a.taskPriority - b.taskPriority);
       } else if(val === 'taskName') {
         newTasksList.sort(function(a,b){
           return a.taskName.localeCompare(b.taskName);
