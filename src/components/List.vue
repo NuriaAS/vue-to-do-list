@@ -62,9 +62,9 @@ export default {
     },
     formatPriorityValue(value) {
       const priorityMap = {
-        1: 'High',
+        1: 'Low',
         2: 'Medium',
-        3: 'Low'
+        3: 'High'
       }
       return priorityMap[value];
     },
@@ -77,35 +77,42 @@ export default {
         const storedData = JSON.parse(localStorage.getItem('tasks'));
         this.tasks = storedData;
       }
+    },
+    sortList(conditionString) {
+      if(!this.tasks.length) return;
+
+      let newTasksList = [...this.tasks];
+      const taskKey = conditionString.replace("Reverse", "");
+      const taskValid = newTasksList.find(task => task[taskKey]);
+      const isReverse = conditionString.includes('Reverse');
+      const typeofData = typeof taskValid[taskKey];
+      
+      if (typeofData === 'string') {
+        if(isReverse) {
+          newTasksList.sort(function(a,b){
+            return b[taskKey].localeCompare(a[taskKey]);
+          })
+        } else {
+          newTasksList.sort(function(a,b){
+            return a[taskKey].localeCompare(b[taskKey]);
+          })
+        } 
+      } else if (typeofData === 'number') {
+        if (isReverse) {
+          newTasksList.sort((a, b) => a[taskKey] - b[taskKey]);
+        } else {
+          newTasksList.sort((a, b) => b[taskKey] - a[taskKey]);
+        }
+      } else {
+        return;
+      }
+
+      this.tasks = newTasksList;
     }
   },
   watch: {
     order(val) {
-      let newTasksList = [...this.tasks];
-      if(val === 'highPriority' ) {
-          newTasksList.sort((a, b) => a.taskPriority - b.taskPriority);
-     
-      } else if(val === 'lowPriority') {
-        newTasksList.sort((a, b) => b.taskPriority - a.taskPriority);
-      } else if(val === 'alphabetical') {
-        newTasksList.sort(function(a,b){
-          return a.taskName.localeCompare(b.taskName);
-        })
-      } else if(val === 'alphabeticalReverse') {
-        newTasksList.sort(function(a,b){
-          return b.taskName.localeCompare(a.taskName);
-        })
-      } else if (val === 'when') {
-        newTasksList.sort((a, b) => b.taskDateExecutionSort - a.taskDateExecutionSort);
-      } else if (val === 'whenReverse') {
-        newTasksList.sort((a, b) => a.taskDateExecutionSort - b.taskDateExecutionSort);
-      }  else if (val === 'createdReverse') {
-        newTasksList.sort((a, b) => b.taskCreationDateSort - a.taskCreationDateSort);
-        
-      } else if (val === 'created') {
-         newTasksList.sort((a, b) => a.taskCreationDateSort - b.taskCreationDateSort);
-      }
-      this.tasks = newTasksList;
+     this.sortList(val);
     },
   }
 }
