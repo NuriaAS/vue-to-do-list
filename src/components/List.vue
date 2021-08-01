@@ -77,18 +77,18 @@ export default {
         const storedData = JSON.parse(localStorage.getItem('tasks'));
         this.tasks = storedData;
       }
-    }
-  },
-  watch: {
-    order(val) {
+    },
+    sortList(conditionString) {
       if(!this.tasks.length) return;
 
       let newTasksList = [...this.tasks];
-      const taskKey = val.replace("Reverse", "");
+      const taskKey = conditionString.replace("Reverse", "");
       const taskValid = newTasksList.find(task => task[taskKey]);
+      const isReverse = conditionString.includes('Reverse');
+      const typeofData = typeof taskValid[taskKey];
       
-      if (typeof taskValid[taskKey] === 'string') {
-        if(val.includes('Reverse')) {
+      if (typeofData === 'string') {
+        if(isReverse) {
           newTasksList.sort(function(a,b){
             return b[taskKey].localeCompare(a[taskKey]);
           })
@@ -97,8 +97,8 @@ export default {
             return a[taskKey].localeCompare(b[taskKey]);
           })
         } 
-      } else if (typeof taskValid[taskKey] === 'number') {
-        if (val.includes('Reverse')) {
+      } else if (typeofData === 'number') {
+        if (isReverse) {
           newTasksList.sort((a, b) => a[taskKey] - b[taskKey]);
         } else {
           newTasksList.sort((a, b) => b[taskKey] - a[taskKey]);
@@ -108,6 +108,11 @@ export default {
       }
 
       this.tasks = newTasksList;
+    }
+  },
+  watch: {
+    order(val) {
+     this.sortList(val);
     },
   }
 }
